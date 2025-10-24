@@ -1,12 +1,13 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class PlayerMovement : MonoBehaviour
 {
 
     public Rigidbody rb;
-
     public float speed;
     public Vector3 movement;
+    public Transform camTransform;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -17,17 +18,22 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        movement = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+        
+        float horizontal = Input.GetAxis("Horizontal");
+        float vertical = Input.GetAxis("Vertical");
+
+        Vector3 camForward = camTransform.forward;
+        Vector3 camRight = camTransform.right;
+
+        movement = (camForward * vertical + camRight * horizontal ).normalized;
     }
 
     private void FixedUpdate()
     {
-        moveCharacter(movement);
+        Vector3 targetVelocity = movement * speed;
+        rb.linearVelocity = new Vector3(targetVelocity.x, rb.linearVelocity.y, targetVelocity.z);
+
     }
 
-    void moveCharacter(Vector3 direction)
-    {
-        rb.linearVelocity = direction * speed;
-    }
 
 }
