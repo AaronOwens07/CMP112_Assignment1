@@ -4,15 +4,18 @@ public class stockGoUp : MonoBehaviour
 {
     public drawLineToLastPeg drawLine;
     public GameObject stockPegPrefab;
-    public Vector3 stockPeg;
+    public Transform stockPeg;
+    public GameObject canvas;
+    private Transform previousPegTransform;
+    public Transform startPegTransform;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    public moneyManager moneyManager;
+
     void Start()
     {
-        
+        previousPegTransform = startPegTransform;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
@@ -23,12 +26,26 @@ public class stockGoUp : MonoBehaviour
 
     public void ChangeStockValue()
     {
-        Vector3 newStockPeg = stockPeg + new Vector3(300, 0, 0);
-        GameObject newPeg = Instantiate(stockPegPrefab, newStockPeg, stockPegPrefab.transform.rotation);
+        RectTransform stockPegRect = stockPeg.GetComponent<RectTransform>();
+        RectTransform previousPegRect = previousPegTransform.GetComponent<RectTransform>();
+
+        float previousPegY = previousPegRect.anchoredPosition.y;
+        float randomY = Random.Range(-200f, 200f);
+        Vector2 newAnchoredPosition = stockPegRect.anchoredPosition + new Vector2(333f, randomY);
+
+        GameObject newPeg = Instantiate(stockPegPrefab, canvas.transform);
+        RectTransform newPegRect = newPeg.GetComponent<RectTransform>();
+        newPegRect.anchoredPosition = newAnchoredPosition;
 
         drawLine = newPeg.GetComponent<drawLineToLastPeg>();
-        drawLine.endPoint = newStockPeg;
+        drawLine.startPoint = newPeg.transform;
+        drawLine.endPoint = previousPegTransform;
 
-        stockPeg = newStockPeg;
+        // calculates the percent change of the stock and updates the player's money
+        float percentChange = (randomY / previousPegY);
+        moneyManager.UpdateMoney(percentChange);
+
+        previousPegTransform = newPeg.transform;
+        stockPeg = newPeg.transform;
     }
 }
