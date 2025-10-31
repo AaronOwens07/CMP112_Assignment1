@@ -3,12 +3,42 @@ using UnityEngine.SceneManagement;
 
 public class TriggerBox : MonoBehaviour
 {
-    public string sceneName;
-    private void OnTriggerStay(Collider other)
+
+    public GameObject selectionUI;
+    public bool canTrigger;
+    public PlayerMovement playerMovement;
+    public cameraMovement cameraMovement;
+
+    private void Update()
     {
-        if (other.gameObject.CompareTag("Player") && Input.GetKeyDown(KeyCode.E))
+        if (canTrigger && Input.GetKey(KeyCode.E))
         {
-            SceneManager.LoadScene(sceneName);
+            selectionUI.SetActive(true);
         }
+
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            canTrigger = true;
+        }
+
+        //turn Off Movement to access UI
+        playerMovement.enabled = false;
+        cameraMovement.enabled = false;
+        Cursor.lockState = CursorLockMode.Confined;
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            canTrigger = false;
+        }
+        
+
+    }
+
 }
