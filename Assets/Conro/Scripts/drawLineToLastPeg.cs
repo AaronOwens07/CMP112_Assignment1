@@ -10,6 +10,7 @@ public class drawLineToLastPeg : MonoBehaviour
 
     void Start()
     {
+        //don't use find, im using it because im stupid on the occasion
         mainCam = GameObject.FindGameObjectWithTag("MainCamera");
 
         lineRenderer.SetPosition(0, startPoint.position);
