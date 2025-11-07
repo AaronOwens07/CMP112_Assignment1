@@ -57,8 +57,46 @@ public class stockGoUp : MonoBehaviour
         drawLine.endPoint = previousPegTransform;
 
         //calculates the percent change of the stock and updates the player's money
-        float percentChange = (newPegY / previousPegY);
-        moneyManager.UpdateMoney(percentChange);
+        if (newPegY > previousPegY)
+        {
+            float percentChange = newPegY - previousPegY;
+
+            Debug.Log(newPegY);
+            Debug.Log(previousPegY);
+            Debug.Log(percentChange);
+            percentChange /= previousPegY;
+            Debug.Log(percentChange);
+            percentChange *= 100;
+            Debug.Log(percentChange);
+
+            moneyManager.UpdateMoneyPositive(percentChange);
+        }
+        else
+        {
+            float percentChange = previousPegY - newPegY;
+
+            Debug.Log(newPegY);
+            Debug.Log(previousPegY);
+            Debug.Log(percentChange);
+            percentChange /= previousPegY;
+            Debug.Log(percentChange);
+            percentChange *= 100;
+            Debug.Log(percentChange);
+
+            if (percentChange < 0)
+            {
+                percentChange -= percentChange;
+                percentChange -= percentChange;
+
+                Debug.Log(percentChange);
+
+                moneyManager.UpdateMoneyNegative(percentChange);
+            }
+            else
+            {
+                moneyManager.UpdateMoneyNegative(percentChange);
+            }
+        }
 
         previousPegTransform = newPeg.transform;
         stockPeg = newPeg.transform;

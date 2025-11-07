@@ -7,9 +7,15 @@ public class moneyManager : MonoBehaviour
     public float money;
     public float moneyInMarket;
 
+    public float lowPitchRange = 0.8f;
+    public float highPitchRange = 1.2f;
+
     public TMP_Text moneyText;
     public TMP_Text moneyInMarketText;
     public TMP_InputField investmentInput;
+
+    public AudioSource moneyAudioSource;
+    public AudioClip moneyChangeAudioClip;
 
     void Start()
     {
@@ -21,12 +27,34 @@ public class moneyManager : MonoBehaviour
 
     }
 
-    public void UpdateMoney(float percent)
+    public void UpdateMoneyPositive(float percent)
     {
-        //multiplies player money by the amount the stock when up or down
-        money += moneyInMarket * percent;
+        //multiplies player money by the amount the stock went up
+        percent = 1+(percent/100);
+        Debug.Log(percent);
+        moneyInMarket *= percent;
+        money += moneyInMarket;
+
         moneyInMarket = 0;
         UpdateMoneyText();
+
+        moneyAudioSource.PlayOneShot(moneyChangeAudioClip, 1.0f);
+        moneyAudioSource.pitch = Random.Range(lowPitchRange, highPitchRange);
+    }
+
+    public void UpdateMoneyNegative(float percent)
+    {
+        //same thing but decrease
+        percent = 0+(percent/100);
+        Debug.Log(percent);
+        moneyInMarket *= percent;
+        money += moneyInMarket;
+
+        moneyInMarket = 0;
+        UpdateMoneyText();
+
+        moneyAudioSource.PlayOneShot(moneyChangeAudioClip, 1.0f);
+        moneyAudioSource.pitch = Random.Range(lowPitchRange, highPitchRange);
     }
 
     private void UpdateMoneyText()
