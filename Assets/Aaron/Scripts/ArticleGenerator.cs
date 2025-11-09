@@ -1,8 +1,14 @@
 using UnityEngine;
+using TMPro;
 
 public class ArticleGenerator : MonoBehaviour
 {
     public ArticleGeneratorData data;
+
+    public TMP_Text articleText;
+    public TMP_Text oldArticleText;
+    public TMP_Text FinalArticleText;
+
 
     public string GenerateArticle()
     {
@@ -25,9 +31,18 @@ public class ArticleGenerator : MonoBehaviour
         return template;
     }
 
-    void Start()
+    public void DisplayNewArticle()
     {
-        //working chekc
-        Debug.Log(GenerateArticle());
+        string article = GenerateArticle();
+
+        if (articleText != null)
+        {
+            FinalArticleText.text = oldArticleText.text;
+            oldArticleText.text = articleText.text;
+            articleText.text = article;
+        }
+
+        Debug.Log("New article displayed.");
     }
+
 }

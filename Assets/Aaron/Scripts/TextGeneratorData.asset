@@ -13,7 +13,10 @@ MonoBehaviour:
   m_Name: TextGeneratorData
   m_EditorClassIdentifier: 
   ArticleTemplates:
-  - template: '{reason} which resulted in {Companies} seeing a {percentage} {positive}'
+  - template: '{reason} which resulted in {company} seeing a {percentage}% {positive}'
+  - template: Due to {reason}, {company} experianced a {negative} of {percentage}%
+      in stock value
+  - template: Investors reacted to {reason}, resulting in a {percentage}% {positive}
   companies:
   - Zamazon
   - Gapple
@@ -29,9 +32,20 @@ MonoBehaviour:
   - 6.7
   - 4.1
   reasons:
-  - Amerca stole more oil from the middle east
-  - Kim jon un supports james francos latest interview with katty perry
+  - launces a new innovative Ai service
+  - beats expectations for Q4 earnings
+  - announces a new major partnership with tech giant
+  - unveils groundbreaking new product
+  - faces backlash over data privacy concerns
+  - CEO steps down amid controversy
+  - Amid new trump tarrifs
   positive:
-  - 
+  - surged
+  - climbed
+  - increased
+  - jumped
   negative:
-  - 
+  - fall
+  - plunged
+  - dropped
+  - decreased

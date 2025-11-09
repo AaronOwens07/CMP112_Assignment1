@@ -10,6 +10,7 @@ public class TriggerBox : MonoBehaviour
     public bool isTriggered;
     public PlayerMovement playerMovement;
     public cameraMovement cameraMovement;
+    public ArticleGenerator articleGenerator;
 
     [Header("Audio Variables")]
 
@@ -33,6 +34,7 @@ public class TriggerBox : MonoBehaviour
             isTriggered = true;
 
             selectionUI.SetActive(true);
+            articleGenerator.DisplayNewArticle();
             source.pitch = Random.Range(lowPitchRange, highPitchRange);
             source.Play();
         }
