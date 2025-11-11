@@ -13,10 +13,24 @@ MonoBehaviour:
   m_Name: TextGeneratorData
   m_EditorClassIdentifier: 
   ArticleTemplates:
-  - template: '{reason} which resulted in {company} seeing a {percentage}% {positive}'
+  - template: '{reason} which resulted in {company} seeing a {percentage}% change
+      in stock value '
   - template: Due to {reason}, {company} experianced a {negative} of {percentage}%
       in stock value
-  - template: Investors reacted to {reason}, resulting in a {percentage}% {positive}
+  - template: 'Investors reacted to {reason}, resulting in stocks {positive} {percentage}% '
+  - template: '{company}''s stock surged by {percentage}% following news that {reason}'
+  - template: A wave of investor optimism affected {company}, increasing shares by
+      {percentage} after {reason}
+  - template: '{company} shares tumbled {percentage}% in wake of {reason}'
+  - template: '{reason} triggered harsh decline in {company} value, as stocks drop
+      {percentage}%'
+  - template: '{company} shares went through rapid change, ultimately stocks {positive}
+      by {percentage}% as the news of {reason}'
+  - template: '{company} shares went through rapid change, ultimately stocks {negative}
+      by {percentage}% as the news of {reason}'
+  - template: Due to {reason}, {company} experianced a {positive} of {percentage}%
+      in stock value
+  - template: Investors reacted to {reason}, resulting in stocks {negative} {percentage}%
   companies:
   - Zamazon
   - Gapple
@@ -24,6 +38,9 @@ MonoBehaviour:
   - Telza
   - Mvdidia
   - FallMart
+  - CostCo
+  - VoltsWagon
+  - MetaVerse
   percentages:
   - 2.6
   - 13.7
@@ -31,21 +48,38 @@ MonoBehaviour:
   - 1.2
   - 6.7
   - 4.1
+  - 2.1
+  - 3.5
+  - 7.1
+  - 8.8
+  - 2.9
+  - 0.4
+  - 1.6
   reasons:
   - launces a new innovative Ai service
   - beats expectations for Q4 earnings
-  - announces a new major partnership with tech giant
-  - unveils groundbreaking new product
-  - faces backlash over data privacy concerns
+  - a new major partnership with tech giant announced
+  - a new groundbreaking product launched
+  - the company faces backlash over data privacy concerns
   - CEO steps down amid controversy
   - Amid new trump tarrifs
+  - a blockbuster earnings report
+  - a positive rulling in a major lawsuit
+  - a widespread product recall
+  - a sudden dip in oil prices
+  - rumors of a sudden merger with similar company
   positive:
   - surged
   - climbed
   - increased
   - jumped
+  - gain
+  - soar
   negative:
   - fall
   - plunged
   - dropped
   - decreased
+  - dip
+  - tumble
+  - drop
