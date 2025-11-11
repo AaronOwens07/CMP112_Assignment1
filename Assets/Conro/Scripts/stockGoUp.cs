@@ -17,6 +17,8 @@ public class stockGoUp : MonoBehaviour
     public TMP_Text pegLimitText;
 
     public moneyManager moneyManager;
+    public Animator cameraAnimation;
+    public Animator gameOverAnimator;
 
     void Start()
     {
@@ -87,13 +89,14 @@ public class stockGoUp : MonoBehaviour
             moneyManager.quotaText.text = $"quota: £{moneyManager.quota}";
             pegLimitText.text = $"{pegLimit} day(s)";
             moneyManager.SaveQuota();
+
+            //plays camera animation
+            cameraAnimation.SetTrigger("cameraMove");
         }
         else
         {
             Debug.Log("game over");
-            moneyManager.ResetMoney();
-            moneyManager.ResetQuota();
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            gameOverAnimator.SetTrigger("gameOver");
         }
     }
 }

@@ -1,6 +1,7 @@
-using UnityEngine;
 using TMPro;
+using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Windows;
 
 public class moneyManager : MonoBehaviour
 {
@@ -81,21 +82,28 @@ public class moneyManager : MonoBehaviour
 
     public void setInvestment()
     {
-        moneyInMarket = float.Parse(investmentInput.text);
+        string input = investmentInput.text;
+        float investmentValue;
 
-        if (moneyInMarket <= money)
+        //gets value from the input field, and catches potential errors from the input not existing
+        if (string.IsNullOrWhiteSpace(input))
         {
+            moneyInMarket = 0f;
+        }
+        else if (float.TryParse(input, out investmentValue))
+        {
+            moneyInMarket = investmentValue;
             money -= moneyInMarket;
-            UpdateMoneyText();
-            SaveMoney();
-            investmentInput.text = "";
         }
         else
         {
-            investmentInput.text = "Not enough money!";
-            moneyInMarket = 0;
+            moneyInMarket = 0f;
         }
+
+        UpdateMoneyText();
     }
+
+    //functions to carry over money stuff between scenes
 
     public void SaveMoney()
     {
