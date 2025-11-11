@@ -1,0 +1,51 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b29c3c448401b604ab508ee3def03e70, type: 3}
+  m_Name: TextGeneratorData
+  m_EditorClassIdentifier: 
+  ArticleTemplates:
+  - template: '{reason} which resulted in {company} seeing a {percentage}% {positive}'
+  - template: Due to {reason}, {company} experianced a {negative} of {percentage}%
+      in stock value
+  - template: Investors reacted to {reason}, resulting in a {percentage}% {positive}
+  companies:
+  - Zamazon
+  - Gapple
+  - Microsart
+  - Telza
+  - Mvdidia
+  - FallMart
+  percentages:
+  - 2.6
+  - 13.7
+  - 4.8
+  - 1.2
+  - 6.7
+  - 4.1
+  reasons:
+  - launces a new innovative Ai service
+  - beats expectations for Q4 earnings
+  - announces a new major partnership with tech giant
+  - unveils groundbreaking new product
+  - faces backlash over data privacy concerns
+  - CEO steps down amid controversy
+  - Amid new trump tarrifs
+  positive:
+  - surged
+  - climbed
+  - increased
+  - jumped
+  negative:
+  - fall
+  - plunged
+  - dropped
+  - decreased
