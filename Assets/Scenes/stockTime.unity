@@ -3157,7 +3157,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   money: 100
-  quota: 200
+  quota: 300
   moneyInMarket: 0
   lowMoneyPitchRangeLow: 0.85
   lowMoneyPitchRangeHigh: 0.99
