@@ -24,6 +24,7 @@ public class moneyManager : MonoBehaviour
     void Start()
     {
         money = PlayerPrefs.GetFloat("PlayerMoney", money);
+        LoadQuota();
         UpdateMoneyText();
         quotaText.text = $"quota: £{quota}";
     }
@@ -51,16 +52,21 @@ public class moneyManager : MonoBehaviour
 
     public void UpdateMoneyNegative(float percent)
     {
-        //same thing but decrease
-        percent = 0+(percent/100);
-        Debug.Log(percent);
+        //percent is positive, so convert to a reduction
+        percent = 1 - (percent / 100f);
         moneyInMarket *= percent;
+
+        //the player gets instant bankrupted if the stock decreases by over 100% so you need this
+        if (moneyInMarket < 0)
+        {
+            moneyInMarket = 0;
+        }
+
         money += moneyInMarket;
 
         moneyInMarket = 0;
         UpdateMoneyText();
         SaveMoney();
-
 
         moneyAudioSource.pitch = Random.Range(lowMoneyPitchRangeLow, lowMoneyPitchRangeHigh);
         moneyAudioSource.PlayOneShot(moneyChangeAudioClip, 1.0f);
@@ -91,10 +97,35 @@ public class moneyManager : MonoBehaviour
         }
     }
 
-    private void SaveMoney()
+    public void SaveMoney()
     {
         //saves players money amount across scenes (e.g. if they exit computer and re-enter)
         PlayerPrefs.SetFloat("PlayerMoney", money);
         PlayerPrefs.Save();
+    }
+
+    public void SaveQuota()
+    {
+        PlayerPrefs.SetFloat("PlayerQuota", quota);
+        PlayerPrefs.Save();
+    }
+
+    public void LoadQuota()
+    {
+        quota = PlayerPrefs.GetFloat("PlayerQuota", quota);
+    }
+
+    public void ResetMoney()
+    {
+        money = 100;
+        SaveMoney();
+        UpdateMoneyText();
+    }
+
+    public void ResetQuota()
+    {
+        quota = 300;
+        SaveQuota();
+        quotaText.text = $"quota: £{quota}";
     }
 }

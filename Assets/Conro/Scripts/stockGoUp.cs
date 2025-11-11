@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class stockGoUp : MonoBehaviour
 {
@@ -62,45 +63,15 @@ public class stockGoUp : MonoBehaviour
         drawLine.endPoint = previousPegTransform;
 
         //calculates the percent change of the stock and updates the player's money
-        if (newPegY > previousPegY)
+        float percentChange = (newPegY - previousPegY) / Mathf.Abs(previousPegY) * 100f;
+
+        if (percentChange >= 0)
         {
-            float percentChange = newPegY - previousPegY;
-
-            Debug.Log(newPegY);
-            Debug.Log(previousPegY);
-            Debug.Log(percentChange);
-            percentChange /= previousPegY;
-            Debug.Log(percentChange);
-            percentChange *= 100;
-            Debug.Log(percentChange);
-
             moneyManager.UpdateMoneyPositive(percentChange);
         }
         else
         {
-            float percentChange = previousPegY - newPegY;
-
-            Debug.Log(newPegY);
-            Debug.Log(previousPegY);
-            Debug.Log(percentChange);
-            percentChange /= previousPegY;
-            Debug.Log(percentChange);
-            percentChange *= 100;
-            Debug.Log(percentChange);
-
-            if (percentChange < 0)
-            {
-                percentChange -= percentChange;
-                percentChange -= percentChange;
-
-                Debug.Log(percentChange);
-
-                moneyManager.UpdateMoneyNegative(percentChange);
-            }
-            else
-            {
-                moneyManager.UpdateMoneyNegative(percentChange);
-            }
+            moneyManager.UpdateMoneyNegative(Mathf.Abs(percentChange));
         }
 
         previousPegTransform = newPeg.transform;
@@ -111,16 +82,18 @@ public class stockGoUp : MonoBehaviour
     {
         if (moneyManager.money >= moneyManager.quota)
         {
-            //start new week with double the quota
             pegLimit = 5;
             moneyManager.quota *= 2;
             moneyManager.quotaText.text = $"quota: £{moneyManager.quota}";
             pegLimitText.text = $"{pegLimit} day(s)";
+            moneyManager.SaveQuota();
         }
         else
         {
-            //gameover
-
+            Debug.Log("game over");
+            moneyManager.ResetMoney();
+            moneyManager.ResetQuota();
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
     }
 }
