@@ -2,44 +2,55 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class menuManager : MonoBehaviour
+public class MenuManager : MonoBehaviour
 {
-    public Button stockButton;
-    public string stockSceneName;
-    public GameObject videoClip;
+    public GameObject pauseMenuUI;
+    public PlayerMovement playerMovement;
+    public cameraMovement cameraMovement;
 
-    public GameObject newsite;
-
-    public float time;
-
-    private void Start()
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Start()
     {
         
     }
 
-    private void Update()
+    // Update is called once per frame
+    void Update()
     {
-        time += Time.deltaTime;
-        if (time > 3)
+        
+        if(Input.GetKeyDown(KeyCode.Escape))
         {
-        videoClip.SetActive(false);
+            pauseMenuUI.SetActive(!pauseMenuUI.activeSelf);
 
+            if(pauseMenuUI.activeSelf)
+            {
+                // Pause the game
+                playerMovement.enabled = false;
+                cameraMovement.enabled = false;
+                Cursor.lockState = CursorLockMode.None;
+            }
+            else
+            {
+                // Resume the game
+                playerMovement.enabled = true;
+                cameraMovement.enabled = true;
+                Cursor.lockState = CursorLockMode.Locked;
+            }
         }
     }
 
-    public void StockSelect()
+    public void Resume()
     {
-        SceneManager.LoadScene(stockSceneName);
+        pauseMenuUI.SetActive(false);
+        playerMovement.enabled = true;
+        cameraMovement.enabled = true;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
-    public void openNews()
+    public void Quit()
     {
-        newsite.SetActive(true);
-    }
-
-    public void CloseNews()
-    {
-        newsite.SetActive(false);
+        Debug.Log("Quitting game...");
+        Application.Quit();
     }
 
 }

@@ -12,22 +12,26 @@ public class ArticleGenerator : MonoBehaviour
 
     public string GenerateArticle()
     {
+
+        //ensures data is assigned
         if (data == null || data.ArticleTemplates.Length == 0)
         {
             Debug.LogWarning("No text data assigned!");
             return string.Empty;
         }
 
-
+        // rdomly select a template
         string template = data.ArticleTemplates[Random.Range(0, data.ArticleTemplates.Length)].template;
 
-
+        // replace placeholders with random selections from data arrays
         template = template.Replace("{company}", data.companies[Random.Range(0, data.companies.Length)]);
         template = template.Replace("{positive}", data.positive[Random.Range(0, data.positive.Length)]);
         template = template.Replace("{negative}", data.negative[Random.Range(0, data.negative.Length)]);
         template = template.Replace("{reason}", data.reasons[Random.Range(0, data.reasons.Length)]);
         template = template.Replace("{percentage}", data.percentages[Random.Range(0, data.percentages.Length)]);
 
+
+        // return the generated article
         return template;
     }
 
@@ -37,6 +41,7 @@ public class ArticleGenerator : MonoBehaviour
 
         if (articleText != null)
         {
+            //Update article texts and push old article down
             FinalArticleText.text = oldArticleText.text;
             oldArticleText.text = articleText.text;
             articleText.text = article;

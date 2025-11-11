@@ -25,21 +25,29 @@ public class TriggerBox : MonoBehaviour
 
     private void Update()
     {
+        //if Input && player in trigger box
         if (canTrigger && !isTriggered && Input.GetKeyDown(KeyCode.E))
         {
+            //disable player movement and camera movement
             playerMovement.enabled = false;
             cameraMovement.enabled = false;
             UnityEngine.Cursor.lockState = CursorLockMode.Confined;
             Debug.Log("Locking");
+
+            // allows player to exit computer UI
             isTriggered = true;
 
+            //generates new article
             selectionUI.SetActive(true);
             articleGenerator.DisplayNewArticle();
+
+            //computer start sound 
             source.pitch = Random.Range(lowPitchRange, highPitchRange);
             source.Play();
         }
         else if(isTriggered &&  Input.GetKeyDown(KeyCode.E))
         {
+            //enable player movement and camera movement
             playerMovement.enabled = true;
             cameraMovement.enabled = true;
             UnityEngine.Cursor.lockState = CursorLockMode.None;

@@ -18,18 +18,21 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        // Get input axes
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
 
+        // get camera directions
         Vector3 camForward = camTransform.forward;
         Vector3 camRight = camTransform.right;
 
+        // combine inputs with camera directions
         movement = (camForward * vertical + camRight * horizontal ).normalized;
     }
 
     private void FixedUpdate()
     {
+        // set velocity based on movement input
         Vector3 targetVelocity = movement * speed;
         rb.linearVelocity = new Vector3(targetVelocity.x, rb.linearVelocity.y, targetVelocity.z);
 
