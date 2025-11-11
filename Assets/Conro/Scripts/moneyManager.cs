@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class moneyManager : MonoBehaviour
 {
     public float money;
+    public float quota;
     public float moneyInMarket;
 
     public float lowPitchRange = 0.8f;
@@ -13,6 +14,7 @@ public class moneyManager : MonoBehaviour
     public TMP_Text moneyText;
     public TMP_Text moneyInMarketText;
     public TMP_InputField investmentInput;
+    public TMP_Text quotaText;
 
     public AudioSource moneyAudioSource;
     public AudioClip moneyChangeAudioClip;
@@ -20,6 +22,7 @@ public class moneyManager : MonoBehaviour
     void Start()
     {
         UpdateMoneyText();
+        quotaText.text = $"quota: £{quota}";
     }
 
     void Update()

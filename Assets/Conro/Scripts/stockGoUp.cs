@@ -33,6 +33,11 @@ public class stockGoUp : MonoBehaviour
                 pegLimitText.text = $"{pegLimit} day(s)";
             }
         }
+
+        if (pegLimit == 0)
+        {
+            StartNewWeek();
+        }
     }
 
     public void ChangeStockValue()
@@ -100,5 +105,22 @@ public class stockGoUp : MonoBehaviour
 
         previousPegTransform = newPeg.transform;
         stockPeg = newPeg.transform;
+    }
+
+    public void StartNewWeek()
+    {
+        if (moneyManager.money >= moneyManager.quota)
+        {
+            //start new week with double the quota
+            pegLimit = 5;
+            moneyManager.quota *= 2;
+            moneyManager.quotaText.text = $"quota: £{moneyManager.quota}";
+            pegLimitText.text = $"{pegLimit} day(s)";
+        }
+        else
+        {
+            //gameover
+
+        }
     }
 }
