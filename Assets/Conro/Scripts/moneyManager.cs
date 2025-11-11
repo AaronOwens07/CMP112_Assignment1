@@ -5,15 +5,27 @@ using UnityEngine.UI;
 public class moneyManager : MonoBehaviour
 {
     public float money;
+    public float quota;
     public float moneyInMarket;
+
+    public float lowMoneyPitchRangeLow = 0.85f;
+    public float lowMoneyPitchRangeHigh = 0.99f;
+    public float highMoneyPitchRangeLow = 1.01f;
+    public float highMoneyPitchRangeHigh = 1.15f;
 
     public TMP_Text moneyText;
     public TMP_Text moneyInMarketText;
     public TMP_InputField investmentInput;
+    public TMP_Text quotaText;
+
+    public AudioSource moneyAudioSource;
+    public AudioClip moneyChangeAudioClip;
 
     void Start()
     {
+        money = PlayerPrefs.GetFloat("PlayerMoney", money);
         UpdateMoneyText();
+        quotaText.text = $"quota: £{quota}";
     }
 
     void Update()
@@ -21,12 +33,37 @@ public class moneyManager : MonoBehaviour
 
     }
 
-    public void UpdateMoney(float percent)
+    public void UpdateMoneyPositive(float percent)
     {
-        //multiplies player money by the amount the stock when up or down
-        money += moneyInMarket * percent;
+        //multiplies player money by the amount the stock went up
+        percent = 1+(percent/100);
+        Debug.Log(percent);
+        moneyInMarket *= percent;
+        money += moneyInMarket;
+
         moneyInMarket = 0;
         UpdateMoneyText();
+        SaveMoney();
+
+        moneyAudioSource.pitch = Random.Range(highMoneyPitchRangeLow, highMoneyPitchRangeHigh);
+        moneyAudioSource.PlayOneShot(moneyChangeAudioClip, 1.0f);
+    }
+
+    public void UpdateMoneyNegative(float percent)
+    {
+        //same thing but decrease
+        percent = 0+(percent/100);
+        Debug.Log(percent);
+        moneyInMarket *= percent;
+        money += moneyInMarket;
+
+        moneyInMarket = 0;
+        UpdateMoneyText();
+        SaveMoney();
+
+
+        moneyAudioSource.pitch = Random.Range(lowMoneyPitchRangeLow, lowMoneyPitchRangeHigh);
+        moneyAudioSource.PlayOneShot(moneyChangeAudioClip, 1.0f);
     }
 
     private void UpdateMoneyText()
@@ -44,6 +81,7 @@ public class moneyManager : MonoBehaviour
         {
             money -= moneyInMarket;
             UpdateMoneyText();
+            SaveMoney();
             investmentInput.text = "";
         }
         else
@@ -51,5 +89,12 @@ public class moneyManager : MonoBehaviour
             investmentInput.text = "Not enough money!";
             moneyInMarket = 0;
         }
+    }
+
+    private void SaveMoney()
+    {
+        //saves players money amount across scenes (e.g. if they exit computer and re-enter)
+        PlayerPrefs.SetFloat("PlayerMoney", money);
+        PlayerPrefs.Save();
     }
 }
